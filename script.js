@@ -30,7 +30,80 @@ class Product {
 
 
 const p1 = new Product(1, 'oven', 2015, 1400, 3);
+const p2 = new Product(2, 'TV', 2018, 100, .5);
+const p3 = new Product(3, 'DVD', 2020, 5, .2);
 
-const productsList = new ListArr
+//----------------------------------------------------/
 
-console.log(p1.ageYears());
+
+class ProductsList {
+    constructor() {
+        this.content = [];
+    }
+
+    printProduct(id) {
+        const found = this.content.find(el => el.id == id);
+        console.log(found)
+    }
+
+    printAllProducts(){
+        console.log(...this.content);
+    }
+
+    findProduct(id) {
+        const found = this.content.find(el => el.id == id);
+        return found != null ? found : null;
+    }
+
+    addProduct(product){
+        if(product instanceof Product) {
+            if(this.findProduct(product.id) == null)
+                this.content.push(product);
+        }
+        else {
+            console.log('you aren\'t adding product');
+        }
+    }
+
+    changeProduct(id, product) {
+        if(product instanceof Product) {
+            for(let el of this.content) {
+                if(el.id == id) {
+                    el.id = product.id;
+                    el.name = product.name;
+                    el.productionYear = product.productionYear;
+                    el.price = product.price;
+                    el.energyCost = product.energyUsage;
+                }
+            }
+        }
+
+
+    }
+}
+
+const list = new ProductsList();
+list.addProduct(p1);
+list.addProduct(p2);
+
+list.printAllProducts();
+
+list.changeProduct(2, p3);
+
+list.printAllProducts();
+
+
+
+//----------------------------------------------------/
+
+
+class Storage extends ProductsList {
+    constructor() {
+        super()
+        this.content = {} // key: idPruct, value: amount
+    }
+
+    addProductWithAmount(product, amount) {
+        this.content
+    }
+}
