@@ -100,10 +100,80 @@ list.printAllProducts();
 class Storage extends ProductsList {
     constructor() {
         super()
-        this.content = {} // key: idPruct, value: amount
+        this.content = [] // key: idPruct, value: amount
     }
 
     addProductWithAmount(product, amount) {
-        this.content
+        const found = this.content.find(el => el.product.id == product.id);
+        const foundIDX = this.content.indexOf(found);
+
+        if(found) {
+            this.content[foundIDX].amount += amount;
+        }
+        else
+            this.content.push({product, amount});
     }
 }
+
+const storageList = new Storage();
+
+storageList.addProductWithAmount(p1, 10);
+storageList.addProductWithAmount(p2, 40);
+console.log(storageList);
+storageList.addProductWithAmount(p2, 40);
+console.log(storageList);
+
+
+// class Storage extends ProductsList {
+//     constructor() {
+//         super()
+//         this.content = []
+//     }
+
+//     addProductWithAmount(product, amount) {
+//         const found = this.content.find(el => el.product.id == product.id);
+//         const foundIDX = this.content.indexOf(found);
+
+//         if(found) {
+//             this.content[foundIDX].amount += amount;
+//         }
+//         else
+//             this.content.push({product, amount});
+//     }
+// }
+
+
+class Shop extends ProductsList {
+    constructor() {
+        super()
+        this.content = [] 
+    }
+
+    addProduct(name, model, price, energyUsage) {
+        const newProduct = new Product(Math.floor(Math.random() * 10000), name, model, price, energyUsage);
+        this.content.push(newProduct);
+    }
+
+    addProduct(productID, name, model, price, energyUsage) {
+        const newProduct = new Product(productID, name, model, price, energyUsage);
+        this.content.push(newProduct);
+    }
+}
+
+class Order {
+    constructor(list) {
+        this.content = []
+        this.list = list
+    }
+
+    addProduct(id) {
+        const found = this.list.content.find(el => el.product.id == id);
+        this.content.push(found);
+    }
+}
+
+const order = new Order(list);
+order.addProduct(1)
+
+console.log(order.content);
+
